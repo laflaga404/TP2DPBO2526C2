@@ -216,7 +216,7 @@ $totalPremium = count(array_filter($daftarPelanggan, fn($p) => $p->getTipe() ===
 <header>
     <div class="kicker">Bioskop</div>
     <h1>Tel Aviv XXI</h1>
-    <p>Sistem Keanggotaan Pelanggan</p>
+    <p>Sistem Keanggotaan Pelanggan — versi Website (PHP, non-interaktif)</p>
 </header>
 
 <div class="stats">

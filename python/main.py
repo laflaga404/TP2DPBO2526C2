@@ -8,20 +8,20 @@ daftar_pelanggan = [
     Pelanggan(1, "Andi Saputra", "andi@gmail.com", "081234567890"),
     Pelanggan(2, "Budi Hartono", "budi@gmail.com", "081234567891"),
     Member(3, "Citra Dewi", "citra@gmail.com", "081234567892",
-           "MBR-001", 150, "2024-01-10"),
+           "MBR-001", 150, "2024-01-10", "Gratis Payung"),
     Member(4, "Dewi Lestari", "dewi@gmail.com", "081234567893",
-           "MBR-002", 320, "2023-11-05"),
+           "MBR-002", 320, "2023-11-05", "Gratis 2 Tiket Nonton"),
     MemberPremium(5, "Eka Wijaya", "eka@gmail.com", "081234567894",
-                   "MBR-003", 980, "2023-05-20",
-                   "VC-PREMIUM01", 2000000, True),
+                   "MBR-003", 980, "2023-05-20", "Gratis Popcorn & Minuman",
+                   "VC-PREMIUM01", 0.15, True),
 ]
 
 HEADER = ["ID", "Nama", "Email", "No Telepon", "Tipe",
-          "No Kartu Member", "Poin", "Tgl Gabung",
-          "Kode Voucher", "Limit Transaksi", "Priority"]
+          "No Kartu Member", "Poin", "Tgl Gabung", "Benefit",
+          "Kode Voucher", "Diskon", "Free Upgrade Seat"]
 
 
-# ERROR handling biar ID, poin, limit itu integer
+# ERROR handling biar ID/poin itu integer
 def input_integer(pesan):
     while True:
         try:
@@ -32,6 +32,19 @@ def input_integer(pesan):
                 return nilai
         except ValueError:
             print("Input harus berupa angka hey!")
+
+
+# ERROR handling biar diskon itu angka desimal (misal 0.15)
+def input_desimal(pesan):
+    while True:
+        try:
+            nilai = float(input(pesan).strip().replace(",", "."))
+            if nilai < 0:
+                print("Input harus berupa angka 0 atau lebih!")
+            else:
+                return nilai
+        except ValueError:
+            print("Input harus berupa angka desimal, misal 0.15!")
 
 
 # TAMBAH DATA (satu-satunya operasi selain nampilin data)
@@ -66,23 +79,25 @@ def tambah_data():
         no_kartu = input("No Kartu Member  : ")
         poin = input_integer("Poin             : ")
         tanggal_gabung = input("Tanggal Gabung   : ")
+        benefit = input("Benefit          : ")
         pelanggan_baru = Member(
             id_pelanggan, nama, email, no_telepon,
-            no_kartu, poin, tanggal_gabung
+            no_kartu, poin, tanggal_gabung, benefit
         )
 
     else:  # tipe == "3"
         no_kartu = input("No Kartu Member    : ")
         poin = input_integer("Poin               : ")
         tanggal_gabung = input("Tanggal Gabung     : ")
+        benefit = input("Benefit            : ")
         kode_voucher = input("Kode Voucher       : ")
-        limit_transaksi = input_integer("Limit Transaksi    : ")
-        prioritas_input = input("Priority Support (y/n): ")
-        priority_support = prioritas_input.strip().lower() == "y"
+        diskon = input_desimal("Diskon (misal 0.15): ")
+        free_upgrade_input = input("Free Upgrade Seat (y/n): ")
+        free_upgrade_seat = free_upgrade_input.strip().lower() == "y"
         pelanggan_baru = MemberPremium(
             id_pelanggan, nama, email, no_telepon,
-            no_kartu, poin, tanggal_gabung,
-            kode_voucher, limit_transaksi, priority_support
+            no_kartu, poin, tanggal_gabung, benefit,
+            kode_voucher, diskon, free_upgrade_seat
         )
 
     daftar_pelanggan.append(pelanggan_baru)

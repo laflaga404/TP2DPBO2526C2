@@ -53,7 +53,8 @@ class Pelanggan:
             "-",  # No Kartu Member
             "-",  # Poin
             "-",  # Tanggal Gabung
+            "-",  # Benefit
             "-",  # Kode Voucher
-            "-",  # Limit Transaksi
-            "-",  # Priority Support
+            "-",  # Diskon
+            "-",  # Free Upgrade Seat
         ]

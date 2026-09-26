@@ -89,3 +89,69 @@ Class `MemberPremium` merupakan turunan dari `Member`, sehingga mewarisi atribut
 | `gunakan_voucher()` | Menampilkan pesan bahwa voucher berhasil digunakan |
 | `get_tipe()` | Override dan mengembalikan `"Member Premium"` |
 | `to_row()` | Override untuk menampilkan atribut khusus MemberPremium |
+
+## Alur Program
+
+Alur utama program berada pada `main(1).py`.
+
+```text
+Program dijalankan
+       │
+       ▼
+    Menu Utama
+       │
+       ├── 1. Tambah Data Pelanggan
+       │       │
+       │       ├── Pilih Non-Member
+       │       ├── Pilih Member
+       │       └── Pilih Member Premium
+       │
+       ├── 2. Tampilkan Semua Data
+       │       │
+       │       └── Object diubah menjadi row tabel
+       │
+       └── 3. Keluar
+```
+
+### Proses Tambah Data
+
+1. User memilih tipe pelanggan.
+2. Program meminta ID pelanggan.
+3. Program memeriksa agar ID tidak digunakan oleh object lain.
+4. Program meminta data dasar seperti nama, email, dan nomor telepon.
+5. Berdasarkan tipe yang dipilih, program meminta atribut tambahan.
+6. Object baru dibuat menggunakan class yang sesuai.
+7. Object dimasukkan ke dalam `daftar_pelanggan`.
+
+Program menyediakan tiga pilihan:
+
+```text
+1. Non-Member
+2. Member
+3. Member Premium
+```
+
+### Proses Tampilkan Data
+
+Semua object disimpan dalam satu list bernama `daftar_pelanggan`. Object kemudian diproses menggunakan `to_row()` dan ditampilkan dalam satu tabel dengan kolom yang sama untuk semua tingkatan class.
+
+Atribut yang tidak dimiliki suatu tingkatan ditampilkan sebagai `-`.
+
+### Error Handling
+
+Program memiliki validasi input:
+
+- `input_integer()` digunakan untuk memastikan input ID dan poin berupa bilangan bulat `0` atau lebih.
+- `input_desimal()` digunakan untuk memastikan input diskon berupa bilangan desimal `0` atau lebih.
+- Program juga memeriksa agar ID pelanggan tidak duplikat.
+
+
+# Dokumentasi
+- Python
+![Python](dokumentasi/Python.png) 
+- CPP
+![CPP](dokumentasi/Cpp.png) 
+- Java
+![Jawa](dokumentasi/Java.png) 
+- PHP
+![PHP](dokumentasi/Php.png) 

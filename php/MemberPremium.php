@@ -21,6 +21,7 @@ class MemberPremium extends Member {
         $this->kodeVoucher = (string) $kodeVoucher;
         $this->diskon = (float) $diskon;
         $this->freeUpgradeSeat = (bool) $freeUpgradeSeat;
+        $this->foto = "MemberPremium.png";
     }
 
     // ---- Getter tambahan ----
@@ -46,9 +47,10 @@ class MemberPremium extends Member {
     public function toRow() {
         $row = parent::toRow();
         $row[4] = $this->getTipe();
-        $row[9] = $this->kodeVoucher;
-        $row[10] = number_format($this->diskon, 2, '.', '');
-        $row[11] = $this->freeUpgradeSeat ? "Yes" : "No";
+        // $row[5] (Foto) sudah otomatis "MemberPremium.png" lewat $this->foto
+        $row[10] = $this->kodeVoucher;
+        $row[11] = number_format($this->diskon, 2, '.', '');
+        $row[12] = $this->freeUpgradeSeat ? "Yes" : "No";
         return $row;
     }
 }

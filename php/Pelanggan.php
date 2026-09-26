@@ -10,12 +10,14 @@ class Pelanggan {
     protected $nama;
     protected $email;
     protected $noTelepon;
+    protected $foto;
 
     public function __construct($idPelanggan, $nama, $email, $noTelepon) {
         $this->idPelanggan = (int) $idPelanggan;
         $this->nama = (string) $nama;
         $this->email = (string) $email;
         $this->noTelepon = (string) $noTelepon;
+        $this->foto = "Pelanggan.png";
     }
 
     // ---- Getter ----
@@ -23,11 +25,13 @@ class Pelanggan {
     public function getNama() { return $this->nama; }
     public function getEmail() { return $this->email; }
     public function getNoTelepon() { return $this->noTelepon; }
+    public function getFoto() { return $this->foto; }
 
     // ---- Setter ----
     public function setNama($nama) { $this->nama = (string) $nama; }
     public function setEmail($email) { $this->email = (string) $email; }
     public function setNoTelepon($noTelepon) { $this->noTelepon = (string) $noTelepon; }
+    public function setFoto($foto) { $this->foto = (string) $foto; }
 
     // ---- Method polymorphic (bakal di-override di anak & cucu) ----
     public function getTipe() {
@@ -44,6 +48,7 @@ class Pelanggan {
             $this->email,
             $this->noTelepon,
             $this->getTipe(),
+            $this->foto,
             "-", // No Kartu Member
             "-", // Poin
             "-", // Tanggal Gabung

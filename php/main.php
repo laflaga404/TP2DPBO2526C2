@@ -11,7 +11,7 @@ require_once 'MemberPremium.php';
 $daftarPelanggan = [];
 
 $HEADER = [
-    "ID", "Nama", "Email", "No Telepon", "Tipe",
+    "ID", "Nama", "Email", "No Telepon", "Tipe", "Foto",
     "No Kartu Member", "Poin", "Tgl Gabung", "Benefit",
     "Kode Voucher", "Diskon", "Free Upgrade Seat"
 ];

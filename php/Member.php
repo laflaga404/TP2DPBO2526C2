@@ -20,6 +20,7 @@ class Member extends Pelanggan {
         $this->poin = (int) $poin;
         $this->tanggalGabung = (string) $tanggalGabung;
         $this->benefit = (string) $benefit;
+        $this->foto = "Member.png";
     }
 
     // ---- Getter tambahan ----
@@ -46,10 +47,11 @@ class Member extends Pelanggan {
     public function toRow() {
         $row = parent::toRow();
         $row[4] = $this->getTipe();
-        $row[5] = $this->noKartuMember;
-        $row[6] = (string) $this->poin;
-        $row[7] = $this->tanggalGabung;
-        $row[8] = $this->benefit;
+        // $row[5] (Foto) sudah otomatis "Member.png" lewat $this->foto
+        $row[6] = $this->noKartuMember;
+        $row[7] = (string) $this->poin;
+        $row[8] = $this->tanggalGabung;
+        $row[9] = $this->benefit;
         return $row;
     }
 }

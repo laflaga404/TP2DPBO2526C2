@@ -12,8 +12,8 @@ $daftarPelanggan = [];
 
 $HEADER = [
     "ID", "Nama", "Email", "No Telepon", "Tipe",
-    "No Kartu Member", "Poin", "Tgl Gabung",
-    "Kode Voucher", "Limit Transaksi", "Priority"
+    "No Kartu Member", "Poin", "Tgl Gabung", "Benefit",
+    "Kode Voucher", "Diskon", "Free Upgrade Seat"
 ];
 
 // Helper baca 1 baris dari STDIN (trim newline)
@@ -26,7 +26,7 @@ function bacaInput($pesan) {
     return trim($baris);
 }
 
-// ERROR handling biar ID, poin, limit itu integer
+// ERROR handling biar ID/poin itu integer
 function inputInteger($pesan) {
     while (true) {
         $nilai = bacaInput($pesan);
@@ -46,17 +46,38 @@ function inputInteger($pesan) {
     }
 }
 
+// ERROR handling biar diskon itu angka desimal (misal 0.15)
+function inputDesimal($pesan) {
+    while (true) {
+        $nilai = bacaInput($pesan);
+        $nilai = str_replace(",", ".", $nilai);
+
+        if (!is_numeric($nilai)) {
+            echo "Input harus berupa angka desimal, misal 0.15!\n";
+            continue;
+        }
+
+        $nilai = (float) $nilai;
+
+        if ($nilai < 0) {
+            echo "Input harus berupa angka 0 atau lebih!\n";
+        } else {
+            return $nilai;
+        }
+    }
+}
+
 // ISI 5 OBJEK AWAL SEBELUM ADA INPUT USER
 function isiDataAwal(&$daftarPelanggan) {
     $daftarPelanggan[] = new Pelanggan(1, "Andi Saputra", "andi@gmail.com", "081234567890");
     $daftarPelanggan[] = new Pelanggan(2, "Budi Hartono", "budi@gmail.com", "081234567891");
     $daftarPelanggan[] = new Member(3, "Citra Dewi", "citra@gmail.com", "081234567892",
-        "MBR-001", 150, "2024-01-10");
+        "MBR-001", 150, "2024-01-10", "Gratis Payung");
     $daftarPelanggan[] = new Member(4, "Dewi Lestari", "dewi@gmail.com", "081234567893",
-        "MBR-002", 320, "2023-11-05");
+        "MBR-002", 320, "2023-11-05", "Gratis 2 Tiket Nonton");
     $daftarPelanggan[] = new MemberPremium(5, "Eka Wijaya", "eka@gmail.com", "081234567894",
-        "MBR-003", 980, "2023-05-20",
-        "VC-PREMIUM01", 2000000, true);
+        "MBR-003", 980, "2023-05-20", "Gratis Popcorn & Minuman",
+        "VC-PREMIUM01", 0.15, true);
 }
 
 // TAMBAH DATA (satu-satunya operasi selain nampilin data)
@@ -93,22 +114,24 @@ function tambahData(&$daftarPelanggan) {
         $noKartu = bacaInput("No Kartu Member  : ");
         $poin = inputInteger("Poin             : ");
         $tanggalGabung = bacaInput("Tanggal Gabung   : ");
+        $benefit = bacaInput("Benefit          : ");
 
         $pelangganBaru = new Member($id, $nama, $email, $noTelepon,
-            $noKartu, $poin, $tanggalGabung);
+            $noKartu, $poin, $tanggalGabung, $benefit);
 
     } else {
         $noKartu = bacaInput("No Kartu Member    : ");
         $poin = inputInteger("Poin               : ");
         $tanggalGabung = bacaInput("Tanggal Gabung     : ");
+        $benefit = bacaInput("Benefit            : ");
         $kodeVoucher = bacaInput("Kode Voucher       : ");
-        $limitTransaksi = inputInteger("Limit Transaksi    : ");
-        $prioritasInput = bacaInput("Priority Support (y/n): ");
-        $prioritySupport = (strtolower($prioritasInput) === "y");
+        $diskon = inputDesimal("Diskon (misal 0.15): ");
+        $freeUpgradeInput = bacaInput("Free Upgrade Seat (y/n): ");
+        $freeUpgradeSeat = (strtolower($freeUpgradeInput) === "y");
 
         $pelangganBaru = new MemberPremium($id, $nama, $email, $noTelepon,
-            $noKartu, $poin, $tanggalGabung,
-            $kodeVoucher, $limitTransaksi, $prioritySupport);
+            $noKartu, $poin, $tanggalGabung, $benefit,
+            $kodeVoucher, $diskon, $freeUpgradeSeat);
     }
 
     $daftarPelanggan[] = $pelangganBaru;

@@ -14,11 +14,11 @@ vector<shared_ptr<Pelanggan>> daftarPelanggan;
 
 const vector<string> HEADER = {
     "ID", "Nama", "Email", "No Telepon", "Tipe",
-    "No Kartu Member", "Poin", "Tgl Gabung",
-    "Kode Voucher", "Limit Transaksi", "Priority"
+    "No Kartu Member", "Poin", "Tgl Gabung", "Benefit",
+    "Kode Voucher", "Diskon", "Free Upgrade Seat"
 };
 
-// ERROR handling biar ID, poin, limit itu integer
+// ERROR handling biar ID/poin itu integer
 int inputInteger(string pesan) {
     int nilai;
 
@@ -40,6 +40,28 @@ int inputInteger(string pesan) {
     }
 }
 
+// ERROR handling biar diskon itu angka desimal (misal 0.15)
+double inputDesimal(string pesan) {
+    double nilai;
+
+    while (true) {
+        cout << pesan;
+
+        if (cin >> nilai) {
+            if (nilai < 0) {
+                cout << "Input harus berupa angka 0 atau lebih!" << endl;
+            } else {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                return nilai;
+            }
+        } else {
+            cout << "Input harus berupa angka desimal, misal 0.15!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
+
 // ISI 5 OBJEK AWAL SEBELUM ADA INPUT USER
 void isiDataAwal() {
     daftarPelanggan.push_back(make_shared<Pelanggan>(
@@ -48,14 +70,14 @@ void isiDataAwal() {
         2, "Budi Hartono", "budi@gmail.com", "081234567891"));
     daftarPelanggan.push_back(make_shared<Member>(
         3, "Citra Dewi", "citra@gmail.com", "081234567892",
-        "MBR-001", 150, "2024-01-10"));
+        "MBR-001", 150, "2024-01-10", "Gratis Payung"));
     daftarPelanggan.push_back(make_shared<Member>(
         4, "Dewi Lestari", "dewi@gmail.com", "081234567893",
-        "MBR-002", 320, "2023-11-05"));
+        "MBR-002", 320, "2023-11-05", "Gratis 2 Tiket Nonton"));
     daftarPelanggan.push_back(make_shared<MemberPremium>(
         5, "Eka Wijaya", "eka@gmail.com", "081234567894",
-        "MBR-003", 980, "2023-05-20",
-        "VC-PREMIUM01", 2000000, true));
+        "MBR-003", 980, "2023-05-20", "Gratis Popcorn & Minuman",
+        "VC-PREMIUM01", 0.15, true));
 }
 
 // TAMBAH DATA (satu-satunya operasi selain nampilin data)
@@ -92,27 +114,29 @@ void tambahData() {
         daftarPelanggan.push_back(make_shared<Pelanggan>(id, nama, email, noTelepon));
 
     } else if (tipe == "2") {
-        string noKartu, tanggalGabung;
+        string noKartu, tanggalGabung, benefit;
         cout << "No Kartu Member  : "; getline(cin, noKartu);
         int poin = inputInteger("Poin             : ");
         cout << "Tanggal Gabung   : "; getline(cin, tanggalGabung);
+        cout << "Benefit          : "; getline(cin, benefit);
 
         daftarPelanggan.push_back(make_shared<Member>(
-            id, nama, email, noTelepon, noKartu, poin, tanggalGabung));
+            id, nama, email, noTelepon, noKartu, poin, tanggalGabung, benefit));
 
     } else {
-        string noKartu, tanggalGabung, kodeVoucher, prioritasInput;
+        string noKartu, tanggalGabung, benefit, kodeVoucher, freeUpgradeInput;
         cout << "No Kartu Member    : "; getline(cin, noKartu);
         int poin = inputInteger("Poin               : ");
         cout << "Tanggal Gabung     : "; getline(cin, tanggalGabung);
+        cout << "Benefit            : "; getline(cin, benefit);
         cout << "Kode Voucher       : "; getline(cin, kodeVoucher);
-        int limitTransaksi = inputInteger("Limit Transaksi    : ");
-        cout << "Priority Support (y/n): "; getline(cin, prioritasInput);
-        bool prioritySupport = (prioritasInput == "y" || prioritasInput == "Y");
+        double diskon = inputDesimal("Diskon (misal 0.15): ");
+        cout << "Free Upgrade Seat (y/n): "; getline(cin, freeUpgradeInput);
+        bool freeUpgradeSeat = (freeUpgradeInput == "y" || freeUpgradeInput == "Y");
 
         daftarPelanggan.push_back(make_shared<MemberPremium>(
-            id, nama, email, noTelepon, noKartu, poin, tanggalGabung,
-            kodeVoucher, limitTransaksi, prioritySupport));
+            id, nama, email, noTelepon, noKartu, poin, tanggalGabung, benefit,
+            kodeVoucher, diskon, freeUpgradeSeat));
     }
 
     cout << "Data pelanggan baru berhasil ditambahkan!" << endl;

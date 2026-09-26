@@ -3,23 +3,6 @@
 #include <vector>
 using namespace std;
 
-// Helper: format angka jadi "2,000,000" biar rapi & konsisten
-// tampilannya sama kaya versi Python/Java. Dipakai bareng oleh MemberPremium.
-inline string formatRibuan(double nilai) {
-    string angka = to_string((long long) nilai);
-
-    string hasil;
-    int hitung = 0;
-    for (int i = (int)angka.size() - 1; i >= 0; i--) {
-        hasil = angka[i] + hasil;
-        hitung++;
-        if (hitung % 3 == 0 && i != 0) {
-            hasil = "," + hasil;
-        }
-    }
-    return hasil;
-}
-
 // Level 1 (Parent paling atas)
 // Pelanggan biasa / non-member bioskop Tel Aviv XXI.
 // Cuma modal nama & kontak, belum punya kartu member.
@@ -69,9 +52,10 @@ public:
             "-", // No Kartu Member
             "-", // Poin
             "-", // Tanggal Gabung
+            "-", // Benefit
             "-", // Kode Voucher
-            "-", // Limit Transaksi
-            "-"  // Priority Support
+            "-", // Diskon
+            "-"  // Free Upgrade Seat
         };
     }
 };
